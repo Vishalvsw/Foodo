@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cafeteria Ordering System Plan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutral -->
+    <!-- Application Structure Plan: A tabbed single-page application is used to present the cafeteria system's design. The structure is divided into four logical sections: 'Overview' (project summary & tech stack), 'User Flow' (interactive workflow diagram), 'System Screens' (UI mockups and status color definitions), and 'Data Model' (database schema). This thematic structure was chosen over a linear one because it allows different stakeholders (e.g., developers, designers, project managers) to quickly navigate to the information most relevant to them, enhancing usability and comprehension of the project plan. -->
+    <!-- Visualization & Content Choices: 1. Workflow Diagram -> Goal: Explain process -> Viz: Interactive flowchart with HTML/CSS divs -> Interaction: On-click updates a description panel -> Justification: More engaging and informative than a static image. Library: Vanilla JS. 2. UI Screens & Statuses -> Goal: Showcase UI and explain status meanings -> Viz: Grid of screen mockups and a list of colored status badges -> Interaction: Clicking a status badge displays its definition -> Justification: Creates a direct visual link between the abstract status system and its application in the UI. Library: Vanilla JS. 3. Database Schema -> Goal: Detail data structure -> Viz: Styled cards with field lists -> Interaction: None -> Justification: Prioritizes clarity and readability for a technical audience. Library: HTML/Tailwind. CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FDFBF8;
+            color: #3D352E;
+        }
+        .nav-active {
+            color: #4A5568;
+            border-bottom: 2px solid #A0AEC0;
+            background-color: #F7FAFC;
+        }
+        .nav-inactive {
+            color: #718096;
+            border-bottom: 2px solid transparent;
+        }
+        .content-section {
+            display: none;
+        }
+        .content-active {
+            display: block;
+        }
+        .workflow-step {
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            border: 2px solid transparent;
+        }
+        .workflow-step:hover {
+            transform: scale(1.03);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        .workflow-step-active {
+             border-color: #38A169;
+             box-shadow: 0 4px 20px rgba(56, 161, 105, 0.2);
+        }
+        .status-badge {
+             cursor: pointer;
+             transition: all 0.2s ease-in-out;
+        }
+        .status-badge:hover {
+            transform: translateY(-2px);
+            opacity: 0.9;
+        }
+        .arrow {
+            position: relative;
+            width: 100%;
+            height: 2px;
+            background-color: #CBD5E0;
+        }
+        .arrow::after {
+            content: '';
+            position: absolute;
+            right: -1px;
+            top: -4px;
+            width: 0;
+            height: 0;
+            border-top: 5px solid transparent;
+            border-bottom: 5px solid transparent;
+            border-left: 8px solid #CBD5E0;
+        }
+        .arrow-down {
+            position: relative;
+            width: 2px;
+            height: 40px;
+            background-color: #CBD5E0;
+            margin: 0 auto;
+        }
+        .arrow-down::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: -4px;
+            width: 0;
+            height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 8px solid #CBD5E0;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="container mx-auto p-4 sm:p-6 lg:p-8">
+        <header class="text-center mb-8">
+            <h1 class="text-3xl sm:text-4xl font-bold text-gray-800">Cafeteria Ordering System</h1>
+            <p class="text-lg text-gray-600 mt-2">An Interactive Project Plan</p>
+        </header>
+
+        <nav class="flex justify-center border-b border-gray-200 mb-8">
+            <button data-target="overview" class="nav-btn nav-active py-3 px-4 sm:px-6 font-semibold text-sm sm:text-base">Overview</button>
+            <button data-target="flow" class="nav-btn nav-inactive py-3 px-4 sm:px-6 font-semibold text-sm sm:text-base">User Flow</button>
+            <button data-target="screens" class="nav-btn nav-inactive py-3 px-4 sm:px-6 font-semibold text-sm sm:text-base">System Screens</button>
+            <button data-target="data" class="nav-btn nav-inactive py-3 px-4 sm:px-6 font-semibold text-sm sm:text-base">Data Model</button>
+        </nav>
+
+        <main>
+            <section id="overview" class="content-section content-active animate-fade-in">
+                <div class="bg-white p-6 sm:p-8 rounded-xl shadow-sm">
+                    <h2 class="text-2xl font-bold text-gray-700 mb-4">Project Introduction</h2>
+                    <p class="text-gray-600 leading-relaxed mb-6">
+                        This document outlines the architecture and design for a modern Cafeteria Ordering System. The application is designed to streamline the food ordering process for both customers and cafeteria staff, providing a seamless digital experience from menu browsing to order completion. The system includes features for real-time order tracking, efficient staff management, and administrative control over the menu.
+                    </p>
+
+                    <h3 class="text-xl font-bold text-gray-700 mb-4">Technology Stack</h3>
+                    <p class="text-gray-600 mb-6">The system is built using a modern, scalable, and real-time technology stack to ensure a high-quality user experience and robust performance.</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-center">
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h4 class="font-semibold">Frontend</h4>
+                            <p class="text-sm text-gray-500">React & Tailwind CSS</p>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <h4 class="font-semibold">Backend & Database</h4>
+                            <p class="text-sm text-gray-500">Firebase (Auth, Firestore)</p>
+                        </div>
+                         <div class="bg-gray-50 p-4 rounded-lg">
+                            <h4 class="font-semibold">Version Control</h4>
+                            <p class="text-sm text-gray-500">Git & GitHub</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="flow" class="content-section">
+                 <div class="bg-white p-6 sm:p-8 rounded-xl shadow-sm">
+                    <h2 class="text-2xl font-bold text-gray-700 mb-2 text-center">Interactive Workflow Diagram</h2>
+                    <p class="text-gray-600 leading-relaxed mb-8 text-center">
+                        This diagram illustrates the complete journey for an order within the system. Click on any step to see a detailed description of that phase.
+                    </p>
+
+                    <div id="workflow-description" class="bg-green-50 text-green-800 p-4 rounded-lg mb-8 text-center min-h-[60px] flex items-center justify-center transition-all duration-300">
+                        Select a step to learn more about it.
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div class="p-4 rounded-lg border">
+                             <h3 class="font-bold text-lg text-gray-600 mb-4 text-center">Customer Workflow</h3>
+                             <div class="flex flex-col md:flex-row items-center justify-center gap-4">
+                                <div data-desc="The user opens the application and starts the ordering process." class="workflow-step bg-blue-100 text-blue-800 p-3 rounded-lg shadow-sm text-center w-full md:w-48">User</div>
+                                <div class="arrow hidden md:block w-16"></div>
+                                <div class="arrow-down md:hidden"></div>
+                                <div data-desc="The user navigates through different food categories to find items they want to order." class="workflow-step bg-blue-100 text-blue-800 p-3 rounded-lg shadow-sm text-center w-full md:w-48">Browse Menu</div>
+                                <div class="arrow hidden md:block w-16"></div>
+                                <div class="arrow-down md:hidden"></div>
+                                <div data-desc="The user selects items, customizes them with add-ons if available, and adds them to their virtual cart." class="workflow-step bg-blue-100 text-blue-800 p-3 rounded-lg shadow-sm text-center w-full md:w-48">Add to Cart</div>
+                                <div class="arrow hidden md:block w-16"></div>
+                                <div class="arrow-down md:hidden"></div>
+                                <div data-desc="The user reviews their cart, selects a convenient time slot for pickup, and completes the payment process." class="workflow-step bg-blue-100 text-blue-800 p-3 rounded-lg shadow-sm text-center w-full md:w-48">Checkout & Slot</div>
+                                <div class="arrow hidden md:block w-16"></div>
+                                 <div class="arrow-down md:hidden"></div>
+                                <div data-desc="The order is successfully submitted and enters the cafeteria's system, ready for the staff to process." class="workflow-step bg-blue-100 text-blue-800 p-3 rounded-lg shadow-sm text-center w-full md:w-48">Order Placed</div>
+                             </div>
+                        </div>
+
+                         <div class="flex justify-center"><div class="arrow-down h-12"></div></div>
+
+                        <div class="p-4 rounded-lg border">
+                             <h3 class="font-bold text-lg text-gray-600 mb-4 text-center">Cafeteria Staff Workflow</h3>
+                            <p class="text-sm text-gray-500 mb-4 text-center">All new orders appear on the Cafeteria Dashboard for staff management.</p>
+                             <div class="flex flex-col md:flex-row items-center justify-center gap-4">
+                                <div data-desc="A staff member acknowledges the new order, confirming that the cafeteria will prepare it." class="workflow-step bg-green-100 text-green-800 p-3 rounded-lg shadow-sm text-center w-full md:w-48">Accepted</div>
+                                <div class="arrow hidden md:block w-16"></div>
+                                 <div class="arrow-down md:hidden"></div>
+                                <div data-desc="The kitchen staff begins preparing the food items in the order." class="workflow-step bg-green-100 text-green-800 p-3 rounded-lg shadow-sm text-center w-full md:w-48">Preparing</div>
+                                <div class="arrow hidden md:block w-16"></div>
+                                <div class="arrow-down md:hidden"></div>
+                                <div data-desc="The order is fully prepared and is ready for customer pickup or delivery." class="workflow-step bg-green-100 text-green-800 p-3 rounded-lg shadow-sm text-center w-full md:w-48">Ready</div>
+                                <div class="arrow hidden md:block w-16"></div>
+                                 <div class="arrow-down md:hidden"></div>
+                                <div data-desc="The customer has picked up the order, and the transaction is marked as complete in the system." class="workflow-step bg-green-100 text-green-800 p-3 rounded-lg shadow-sm text-center w-full md:w-48">Completed</div>
+                             </div>
+                             <div class="flex justify-center mt-6"><div class="arrow-down h-8"></div></div>
+                             <div class="flex justify-center">
+                                 <div data-desc="An order can be cancelled and refunded due to issues like item unavailability or customer request." class="workflow-step bg-red-100 text-red-800 p-3 rounded-lg shadow-sm text-center w-full md:w-48">Cancelled/Refunded</div>
+                             </div>
+                        </div>
+                    </div>
+                 </div>
+            </section>
+            
+            <section id="screens" class="content-section">
+                 <div class="bg-white p-6 sm:p-8 rounded-xl shadow-sm">
+                    <h2 class="text-2xl font-bold text-gray-700 mb-2 text-center">Core Screens & Status Colors</h2>
+                    <p class="text-gray-600 leading-relaxed mb-8 text-center">
+                        This section provides an overview of the key screens in the application and the color-coded system used to represent order statuses.
+                    </p>
+
+                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                         <div>
+                            <h3 class="text-xl font-bold text-gray-700 mb-4">UI Screen Designs</h3>
+                             <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                                <div class="bg-gray-100 aspect-square rounded-lg flex flex-col items-center justify-center p-2 text-center">
+                                    <span class="text-4xl">🔑</span>
+                                    <p class="text-xs sm:text-sm font-semibold mt-2">Login / Signup</p>
+                                </div>
+                                <div class="bg-gray-100 aspect-square rounded-lg flex flex-col items-center justify-center p-2 text-center">
+                                    <span class="text-4xl">🍔</span>
+                                    <p class="text-xs sm:text-sm font-semibold mt-2">Menu & Categories</p>
+                                </div>
+                                <div class="bg-gray-100 aspect-square rounded-lg flex flex-col items-center justify-center p-2 text-center">
+                                    <span class="text-4xl">➕</span>
+                                    <p class="text-xs sm:text-sm font-semibold mt-2">Item Detail Modal</p>
+                                </div>
+                                <div class="bg-gray-100 aspect-square rounded-lg flex flex-col items-center justify-center p-2 text-center">
+                                    <span class="text-4xl">🛒</span>
+                                    <p class="text-xs sm:text-sm font-semibold mt-2">Cart & Checkout</p>
+                                </div>
+                                <div class="bg-gray-100 aspect-square rounded-lg flex flex-col items-center justify-center p-2 text-center">
+                                    <span class="text-4xl">📦</span>
+                                    <p class="text-xs sm:text-sm font-semibold mt-2">My Orders</p>
+                                </div>
+                                 <div class="bg-gray-100 aspect-square rounded-lg flex flex-col items-center justify-center p-2 text-center">
+                                    <span class="text-4xl">📊</span>
+                                    <p class="text-xs sm:text-sm font-semibold mt-2">Staff Dashboard</p>
+                                </div>
+                                <div class="bg-gray-100 aspect-square rounded-lg flex flex-col items-center justify-center p-2 text-center">
+                                    <span class="text-4xl">⚙️</span>
+                                    <p class="text-xs sm:text-sm font-semibold mt-2">Admin Management</p>
+                                </div>
+                                <div class="bg-gray-100 aspect-square rounded-lg flex flex-col items-center justify-center p-2 text-center">
+                                    <span class="text-4xl">📈</span>
+                                    <p class="text-xs sm:text-sm font-semibold mt-2">Reports Page</p>
+                                </div>
+                             </div>
+                         </div>
+                         <div>
+                            <h3 class="text-xl font-bold text-gray-700 mb-4">Order Status System</h3>
+                            <p class="text-gray-600 mb-4">Click on a status to see its definition.</p>
+                             <div id="status-description" class="bg-gray-100 p-4 rounded-lg mb-4 min-h-[70px] flex items-center justify-center transition-all duration-300">
+                                 Select a status.
+                             </div>
+                             <div class="flex flex-wrap gap-2">
+                                <div data-desc="A new order has been successfully submitted by the customer but has not yet been viewed by staff." class="status-badge text-xs font-bold py-1 px-3 rounded-full bg-gray-400 text-white">PLACED</div>
+                                <div data-desc="The cafeteria staff has acknowledged the order and will begin preparing it soon." class="status-badge text-xs font-bold py-1 px-3 rounded-full bg-blue-500 text-white">ACCEPTED</div>
+                                <div data-desc="The order is currently being prepared in the kitchen." class="status-badge text-xs font-bold py-1 px-3 rounded-full bg-orange-500 text-white">PREPARING</div>
+                                <div data-desc="The order is ready for the customer to pick up." class="status-badge text-xs font-bold py-1 px-3 rounded-full bg-green-500 text-white">READY</div>
+                                <div data-desc="The customer has received their order, and the transaction is complete." class="status-badge text-xs font-bold py-1 px-3 rounded-full bg-gray-800 text-white">COMPLETED</div>
+                                <div data-desc="The order has been cancelled, either by the customer or the staff. A refund has been processed if applicable." class="status-badge text-xs font-bold py-1 px-3 rounded-full bg-red-600 text-white">CANCELLED</div>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+            </section>
+            
+            <section id="data" class="content-section">
+                <div class="bg-white p-6 sm:p-8 rounded-xl shadow-sm">
+                    <h2 class="text-2xl font-bold text-gray-700 mb-2 text-center">Database Schema</h2>
+                    <p class="text-gray-600 leading-relaxed mb-8 text-center">
+                        The data is structured in Firestore using collections and documents. Below is the schema for the core collections that power the application.
+                    </p>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <div class="bg-gray-50 border border-gray-200 rounded-lg p-6">
+                            <h3 class="text-lg font-semibold text-gray-800">Collection: <code class="bg-gray-200 text-gray-700 px-2 py-1 rounded">menu-items</code></h3>
+                            <p class="text-sm text-gray-500 mt-1 mb-4">Stores information for each item available on the menu.</p>
+                            <ul class="space-y-2 text-gray-700">
+                                <li class="flex justify-between border-b pb-1"><span>name:</span> <span class="font-mono text-sm">string</span></li>
+                                <li class="flex justify-between border-b pb-1"><span>description:</span> <span class="font-mono text-sm">string</span></li>
+                                <li class="flex justify-between border-b pb-1"><span>price:</span> <span class="font-mono text-sm">number</span></li>
+                                <li class="flex justify-between border-b pb-1"><span>category:</span> <span class="font-mono text-sm">string</span></li>
+                                <li class="flex justify-between"><span>imageUrl:</span> <span class="font-mono text-sm">string</span></li>
+                            </ul>
+                        </div>
+                        <div class="bg-gray-50 border border-gray-200 rounded-lg p-6">
+                            <h3 class="text-lg font-semibold text-gray-800">Collection: <code class="bg-gray-200 text-gray-700 px-2 py-1 rounded">orders</code></h3>
+                            <p class="text-sm text-gray-500 mt-1 mb-4">Contains all customer orders and their details.</p>
+                            <ul class="space-y-2 text-gray-700">
+                                <li class="flex justify-between border-b pb-1"><span>userId:</span> <span class="font-mono text-sm">string</span></li>
+                                <li class="flex justify-between border-b pb-1"><span>items:</span> <span class="font-mono text-sm">array</span></li>
+                                <li class="flex justify-between border-b pb-1"><span>status:</span> <span class="font-mono text-sm">string</span></li>
+                                <li class="flex justify-between border-b pb-1"><span>pickupSlot:</span> <span class="font-mono text-sm">string</span></li>
+                                <li class="flex justify-between"><span>timestamp:</span> <span class="font-mono text-sm">date</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const navButtons = document.querySelectorAll('.nav-btn');
+            const contentSections = document.querySelectorAll('.content-section');
+            const workflowSteps = document.querySelectorAll('.workflow-step');
+            const workflowDescription = document.getElementById('workflow-description');
+            const statusBadges = document.querySelectorAll('.status-badge');
+            const statusDescription = document.getElementById('status-description');
+
+            navButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const target = button.dataset.target;
+                    
+                    navButtons.forEach(btn => {
+                        btn.classList.remove('nav-active');
+                        btn.classList.add('nav-inactive');
+                    });
+                    button.classList.add('nav-active');
+                    button.classList.remove('nav-inactive');
+                    
+                    contentSections.forEach(section => {
+                        if (section.id === target) {
+                            section.classList.add('content-active');
+                        } else {
+                            section.classList.remove('content-active');
+                        }
+                    });
+                });
+            });
+            
+            workflowSteps.forEach(step => {
+                step.addEventListener('click', () => {
+                    const desc = step.dataset.desc;
+                    workflowDescription.textContent = desc;
+
+                    workflowSteps.forEach(s => s.classList.remove('workflow-step-active'));
+                    step.classList.add('workflow-step-active');
+                });
+            });
+
+             statusBadges.forEach(badge => {
+                badge.addEventListener('click', () => {
+                    const desc = badge.dataset.desc;
+                    statusDescription.textContent = desc;
+                });
+            });
+        });
+    </script>
+</body>
+</html>
